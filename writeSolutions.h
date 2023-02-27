@@ -10,11 +10,9 @@ void writeSolutionsToFileCA1(const Vector<double>& U, double l2Norm, std::string
   hsize_t dimens_1d;
   std::cout << "writing solution for Coding Assignment 1 to file : " << solutionTag.c_str() << ".h5" << std::endl;
 
- //create HDF5 file
   std::string solutionFileName(solutionTag); solutionFileName +=  ".h5";
   file_id = H5Fcreate (solutionFileName.c_str(), H5F_ACC_TRUNC, H5P_DEFAULT, H5P_DEFAULT);
   
-  //write scalar values to data set
   dimens_1d = 1;
   double scalarValue[1]={l2Norm};
   dataspace_id = H5Screate_simple(1, &dimens_1d, NULL);
@@ -23,7 +21,6 @@ void writeSolutionsToFileCA1(const Vector<double>& U, double l2Norm, std::string
   status = H5Sclose(dataspace_id);  
   status = H5Dclose(dataset_id);
  
-  //write solution vector to data set
   dimens_1d = U.size();
   std::vector<double> solutionVector(U.size());
   for (unsigned int i=0; i<U.size(); i++){
@@ -35,7 +32,6 @@ void writeSolutionsToFileCA1(const Vector<double>& U, double l2Norm, std::string
   status = H5Sclose(dataspace_id);  
   status = H5Dclose(dataset_id);
 
-  //close HDF5 file
   status = H5Fclose(file_id);
 }
 

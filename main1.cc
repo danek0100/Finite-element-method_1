@@ -12,25 +12,20 @@ int main (){
   try{
     deallog.depth_console (0);
 
-		//Specify the basis function order: 1, 2, or 3
-		unsigned int order = 3;
+    unsigned int order = 3;
 
-		//Specify the subproblem: 1 or 2
-		unsigned int problem = 1;
+    unsigned int problem = 2;
 
     FEM<1> problemObject(order,problem);
     
-    //Define the number of elements as an input to "generate_mesh"
-    problemObject.generate_mesh(10); //e.g. a 10 element mesh
+    problemObject.generate_mesh(10);
     problemObject.setup_system();
     problemObject.assemble_system();
     problemObject.solve();
     std::cout << problemObject.l2norm_of_error() << std::endl;
     
-    //write output file in vtk format for visualization
     problemObject.output_results();
     
-    //write solutions to h5 file
     char tag[21];
     sprintf(tag, "CA1_Order%d_Problem%d",order,problem);
     writeSolutionsToFileCA1(problemObject.D, problemObject.l2norm_of_error(), tag);
